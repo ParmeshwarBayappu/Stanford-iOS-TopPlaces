@@ -13,11 +13,13 @@
 
 @property (nonatomic) NSArray *topPlaces;
 @property (nonatomic) NSMutableDictionary *countryToPlaces;
-@property (nonatomic, readonly) NSArray *sortedCountryToPlaces;
+@property (nonatomic) NSArray *sortedCountryToPlaces;
 
 @end
 
 @implementation TopPlacesViewController
+
+@synthesize sortedCountryToPlaces = _sortedCountryToPlaces;
 
 - (void)setTopPlaces:(NSArray *)topPlaces {
 
@@ -37,9 +39,19 @@
 }
 
 - (NSArray *)sortedCountryToPlaces {
-    return [[self.countryToPlaces allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [(NSString *) obj1 compare:obj2];
-    }];
+    if(!_sortedCountryToPlaces) {
+        NSLog(@"Sorted Country List creation starting...");
+        _sortedCountryToPlaces = [[self.countryToPlaces allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [(NSString *) obj1 compare:obj2];
+        }];
+        NSLog(@"Sorted Country List creation completed!");
+    }
+    return _sortedCountryToPlaces;
+}
+
+- (void)setSortedCountryToPlaces:(NSArray *)sortedCountryToPlaces {
+    assert(sortedCountryToPlaces==nil);
+    _sortedCountryToPlaces = sortedCountryToPlaces;
 }
 
 
@@ -50,7 +62,7 @@
 }
 
 - (void)setup {
-    [self updateTopPlaces];
+    //[self updateTopPlaces];
 
 }
 - (IBAction)onTableRefreshAction:(UIRefreshControl *)sender {
@@ -88,6 +100,8 @@
         }   else {
             NSLog(@"Error:%@", error);
         }
+        NSLog(@"Sending request to relaodData");
+        [self.tableView reloadData];
         [self.refreshControl endRefreshing];
     }];
     [sessionDownloadTask resume];
@@ -148,6 +162,8 @@
     for (NSDictionary *place in places) {
         [self addPlace:place];
     }
+    self.sortedCountryToPlaces = nil;
+    NSLog(@"Country dictionary update completed!");
 }
 
 - (void)addPlace:(NSDictionary *)place {
