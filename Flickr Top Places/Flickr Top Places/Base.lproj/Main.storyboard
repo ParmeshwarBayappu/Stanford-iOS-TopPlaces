@@ -43,6 +43,14 @@
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="OcU-F3-AKa">
                         <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle">
+                            <fragment content="Retrieving from server">
+                                <attributes>
+                                    <font key="NSFont" metaFont="smallSystem"/>
+                                    <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                </attributes>
+                            </fragment>
+                        </attributedString>
                         <connections>
                             <action selector="onTableRefreshAction:" destination="pXC-bZ-n2S" eventType="valueChanged" id="Qew-8R-XiY"/>
                         </connections>
