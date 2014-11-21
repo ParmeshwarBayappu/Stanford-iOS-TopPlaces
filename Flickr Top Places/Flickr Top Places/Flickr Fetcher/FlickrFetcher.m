@@ -113,4 +113,20 @@
     return country;
 }
 
++ (NSString *)extractRestOfNameFromPlaceInformation:(NSDictionary *)place
+{
+    NSMutableString *restOfName = [NSMutableString new];
+    NSString *content = [place valueForKey:FLICKR_PLACE_CONTENT];
+    NSArray *contentComponents = [content componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
+    if(contentComponents.count>2) {
+        NSArray *restOfNameComponents = [contentComponents subarrayWithRange:NSMakeRange(1, contentComponents.count - 2)];
+        [restOfName appendString:restOfNameComponents[0]];
+        for (int i = 1; i < restOfNameComponents.count ; ++i) {
+            [restOfName appendFormat:@", %@", restOfNameComponents[i]];
+
+                    }
+    }
+    return [restOfName copy];
+}
+
 @end

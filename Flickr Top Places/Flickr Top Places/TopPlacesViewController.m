@@ -133,6 +133,11 @@
 - (NSString *)getNameOfPlace:(NSDictionary *)place {
     return [place valueForKeyPath:FLICKR_PLACE_ID];
 }
+
+- (NSString *)getRestOfNameOfPlace:(NSDictionary *)place {
+    return [place valueForKeyPath:FLICKR_PLACE_ID];
+}
+
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return [self countryNameForSection:section];
 }
@@ -148,7 +153,7 @@
     NSDictionary *topPhotoPlace = (self.countriesToPlaces[country])[indexPath.row];
     cell.textLabel.text = [self getNameOfPlace:topPhotoPlace];
     //cell.detailTextLabel.text = [photo valueForKeyPath:FLICKR_PLACE_NAME];
-    cell.detailTextLabel.text = [FlickrFetcher extractCountryNameFromPlaceInformation:topPhotoPlace];
+    cell.detailTextLabel.text = [FlickrFetcher extractRestOfNameFromPlaceInformation:topPhotoPlace];
 
     return cell;
 }
