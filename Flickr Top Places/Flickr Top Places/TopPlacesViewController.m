@@ -62,7 +62,7 @@
 }
 
 - (void)setup {
-    //[self updateTopPlaces];
+    [self updateTopPlaces];
 
 }
 - (IBAction)onTableRefreshAction:(UIRefreshControl *)sender {
@@ -88,7 +88,8 @@
     NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue: [[NSOperationQueue alloc] init]];//[NSOperationQueue mainQueue]];
 
-    [self.refreshControl beginRefreshing];
+    [self.refreshControl beginRefreshing]; //mostly unnecessary
+
     NSURLSessionDownloadTask *sessionDownloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *localLocation, NSURLResponse *response, NSError *error) {
         //[self printOpQueue];
         if(!error) {
@@ -101,8 +102,18 @@
             NSLog(@"Error:%@", error);
         }
         NSLog(@"Sending request to relaodData");
-        [self.tableView reloadData];
-        [self.refreshControl endRefreshing];
+//        //Option 1
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self.tableView reloadData];
+//            [self.refreshControl endRefreshing];
+//        });
+
+        //Option 2
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            [self.tableView reloadData];
+            [self.refreshControl endRefreshing];
+        }];
+
     }];
     [sessionDownloadTask resume];
 }
