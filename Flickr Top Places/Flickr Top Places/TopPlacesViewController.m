@@ -12,7 +12,7 @@
 @interface TopPlacesViewController ()
 
 @property (nonatomic) NSArray *topPlaces;
-@property (nonatomic) NSMutableDictionary *countryToPlaces;
+@property (nonatomic) NSMutableDictionary *countriesToPlaces;
 @property (nonatomic) NSArray *sortedCountryToPlaces;
 
 @end
@@ -31,17 +31,17 @@
     [self.tableView reloadData];
 }
 
-- (NSMutableDictionary *)countryToPlaces {
-    if(!_countryToPlaces) {
-        _countryToPlaces = [NSMutableDictionary new];
+- (NSMutableDictionary *)countriesToPlaces {
+    if(!_countriesToPlaces) {
+        _countriesToPlaces = [NSMutableDictionary new];
     }
-    return _countryToPlaces;
+    return _countriesToPlaces;
 }
 
 - (NSArray *)sortedCountryToPlaces {
     if(!_sortedCountryToPlaces) {
         NSLog(@"Sorted Country List creation starting...");
-        _sortedCountryToPlaces = [[self.countryToPlaces allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        _sortedCountryToPlaces = [[self.countriesToPlaces allKeys] sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             return [(NSString *) obj1 compare:obj2];
         }];
         NSLog(@"Sorted Country List creation completed!");
@@ -130,7 +130,9 @@
     return self.sortedCountryToPlaces[section];
 }
 
-
+- (NSString *)getNameOfPlace:(NSDictionary *)place {
+    return [place valueForKeyPath:FLICKR_PLACE_ID];
+}
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
   return [self countryNameForSection:section];
 }
@@ -143,22 +145,23 @@
 
     NSString *country = [self countryNameForSection:indexPath.section];
     //NSDictionary *topPhotoPlace = (self.topPlaces)[indexPath.row];
-    NSDictionary *topPhotoPlace = (self.countryToPlaces[country])[indexPath.row];
-    cell.textLabel.text = [topPhotoPlace valueForKeyPath:FLICKR_PLACE_ID];
+    NSDictionary *topPhotoPlace = (self.countriesToPlaces[country])[indexPath.row];
+    cell.textLabel.text = [self getNameOfPlace:topPhotoPlace];
     //cell.detailTextLabel.text = [photo valueForKeyPath:FLICKR_PLACE_NAME];
     cell.detailTextLabel.text = [FlickrFetcher extractCountryNameFromPlaceInformation:topPhotoPlace];
 
     return cell;
 }
 
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSString *countryName =  self.sortedCountryToPlaces[section];
-    NSArray *placesInCountry = self.countryToPlaces[countryName];
+    NSArray *placesInCountry = self.countriesToPlaces[countryName];
     return placesInCountry.count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return self.countryToPlaces.count;
+    return self.countriesToPlaces.count;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -169,20 +172,33 @@
 //Group the places into countries and provide an array of
 
 - (void) updateCountryToPlacesWithPlaces: (NSArray *)places {
-    [self.countryToPlaces removeAllObjects];
+    [self.countriesToPlaces removeAllObjects];
     for (NSDictionary *place in places) {
         [self addPlace:place];
     }
+    [self sortPlacesInEachCountry];
+
     self.sortedCountryToPlaces = nil;
     NSLog(@"Country dictionary update completed!");
 }
 
+//Sort the places within each country
+- (void)sortPlacesInEachCountry {
+    for (NSMutableArray *countryToPlaces in self.countriesToPlaces.allValues) {
+        [countryToPlaces sortUsingComparator:^NSComparisonResult(NSDictionary * place1, NSDictionary * place2) {
+            NSString *place1Name = [self getNameOfPlace:place1];
+            NSString *place2Name = [self getNameOfPlace:place2];
+            return [place1Name compare:place2Name];
+        }];
+    }
+}
+
 - (void)addPlace:(NSDictionary *)place {
     NSString *country = [FlickrFetcher extractCountryNameFromPlaceInformation:place];
-    NSMutableArray *existingPlaceListForCountry = [self.countryToPlaces objectForKey:country];
+    NSMutableArray *existingPlaceListForCountry = [self.countriesToPlaces objectForKey:country];
     if(!existingPlaceListForCountry) {
         existingPlaceListForCountry = [NSMutableArray new];
-        [self.countryToPlaces setObject:existingPlaceListForCountry forKey:country];
+        [self.countriesToPlaces setObject:existingPlaceListForCountry forKey:country];
     }
     [existingPlaceListForCountry addObject:place];
 }
