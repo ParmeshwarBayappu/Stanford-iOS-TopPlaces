@@ -8,6 +8,7 @@
 
 #import "PhotosListTableViewController.h"
 #import "FlickrFetcher.h"
+#import "PhotoViewController.h"
 
 @interface PhotosListTableViewController ()
 
@@ -24,17 +25,10 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    //Was unable to set any constraints in Xcode so doing programmatically
+    //Was unable to set any constraints in Xcode, so doing programmatically
     [self.activityIndicator setTranslatesAutoresizingMaskIntoConstraints:NO]; //Essential for below constraints to work
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
-
-    //Use of the below constraints did not have any impact on the size of the indicator
-    //[self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0.0]];
-    //[self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeHeight multiplier:1.0 constant:0.0]];
-
-    NSDictionary *placeOfPhotos = @{FLICKR_PLACE_ID:@"609125"};
-    self.placeOfPhotos = placeOfPhotos;
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -62,6 +56,7 @@
 
 - (void)setPlaceOfPhotos:(NSDictionary *)placeOfPhotos {
     _placeOfPhotos = placeOfPhotos;
+    NSLog(@"Place of Photos set to : %@", placeOfPhotos);
     [self fetchPhotos];
 }
 
@@ -90,8 +85,6 @@
     NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue:nil];
 
-    //[self.refreshControl beginRefreshing];
-
     [self.activityIndicator startAnimating];
 
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:urlForPhotos];
@@ -99,7 +92,7 @@
         if(!error) {
             NSData *jsonData = [NSData dataWithContentsOfURL:localURL options:0 error:&error];
             NSDictionary *propertyListResults = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
-            NSLog(@"Photos from place %@:\n%@", self.placeID, propertyListResults);
+            //NSLog(@"Photos from place %@:\n%@", self.placeID, propertyListResults);
             NSArray *photos = [propertyListResults valueForKeyPath:FLICKR_RESULTS_PHOTOS];
 //            //Option 1
 //            dispatch_async(dispatch_get_main_queue(), ^{
@@ -112,7 +105,8 @@
         }
         [self.activityIndicator stopAnimating];
     }];
-    [downloadTask performSelector:@selector(resume) withObject:nil afterDelay:5];
+    [downloadTask resume];
+    //[downloadTask performSelector:@selector(resume) withObject:nil afterDelay:5];
     //[self performSelectorOnMainThread:@selector(resume) withObject:nil waitUntilDone:false];
 }
 
@@ -172,14 +166,24 @@
 }
 */
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+
+    if([segue.identifier isEqualToString:@"To Photo Page"]) {
+        PhotoViewController * destViewController = segue.destinationViewController;
+        UITableViewCell *selection = sender;
+        NSIndexPath *indexPath =  [self.tableView indexPathForCell:selection];
+        NSDictionary *selectedPhoto = self.photos[indexPath.row];
+
+        destViewController.photoMetaData = selectedPhoto;
+    }
+
 }
-*/
+
 
 @end
