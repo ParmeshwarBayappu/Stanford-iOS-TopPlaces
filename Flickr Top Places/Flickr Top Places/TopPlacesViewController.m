@@ -130,7 +130,7 @@
     return self.sortedCountryToPlaces[section];
 }
 
-- (NSString *)getNameOfPlace:(NSDictionary *)place {
++ (NSString *)getNameOfPlace:(NSDictionary *)place {
     return [place valueForKeyPath:FLICKR_PLACE_NAME];
 }
 
@@ -147,7 +147,7 @@
     NSString *country = [self countryNameForSection:indexPath.section];
     //NSDictionary *topPhotoPlace = (self.topPlaces)[indexPath.row];
     NSDictionary *topPhotoPlace = (self.countriesToPlaces[country])[indexPath.row];
-    cell.textLabel.text = [self getNameOfPlace:topPhotoPlace];
+    cell.textLabel.text = [self.class getNameOfPlace:topPhotoPlace];
     //cell.detailTextLabel.text = [photo valueForKeyPath:FLICKR_PLACE_NAME];
     cell.detailTextLabel.text = [FlickrFetcher extractRestOfNameFromPlaceInformation:topPhotoPlace];
 
@@ -187,8 +187,8 @@
 - (void)sortPlacesInEachCountry {
     for (NSMutableArray *countryToPlaces in self.countriesToPlaces.allValues) {
         [countryToPlaces sortUsingComparator:^NSComparisonResult(NSDictionary * place1, NSDictionary * place2) {
-            NSString *place1Name = [self getNameOfPlace:place1];
-            NSString *place2Name = [self getNameOfPlace:place2];
+            NSString *place1Name = [self.class getNameOfPlace:place1];
+            NSString *place2Name = [self.class getNameOfPlace:place2];
             return [place1Name compare:place2Name];
         }];
     }

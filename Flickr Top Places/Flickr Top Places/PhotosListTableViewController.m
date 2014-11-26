@@ -9,6 +9,7 @@
 #import "PhotosListTableViewController.h"
 #import "FlickrFetcher.h"
 #import "PhotoViewController.h"
+#import "TopPlacesViewController.h"
 
 @interface PhotosListTableViewController ()
 
@@ -30,6 +31,7 @@
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
 
+    [self setTitle:[TopPlacesViewController getNameOfPlace:[self placeOfPhotos]]];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -114,13 +116,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Photo List Entry" forIndexPath:indexPath];
     NSDictionary *photo = self.photos[indexPath.row];
-    cell.textLabel.text = [self titleForPhoto:photo];
-    cell.detailTextLabel.text = [self descriptionForPhoto:photo];
+    cell.textLabel.text = [self.class titleForPhoto:photo];
+    cell.detailTextLabel.text = [self.class descriptionForPhoto:photo];
 
     return cell;
 }
 
-- (NSString *)titleForPhoto:(NSDictionary *)photo {
++ (NSString *)titleForPhoto:(NSDictionary *)photo {
     NSString *title = photo[FLICKR_PHOTO_TITLE];
     if(title==nil || title.length==0) {
         title = [self descriptionForPhoto:photo];
@@ -128,7 +130,7 @@
     return (title==nil || title.length==0)? @"Unknown" : title;
 }
 
-- (NSString *)descriptionForPhoto:(NSDictionary *)photo {
++ (NSString *)descriptionForPhoto:(NSDictionary *)photo {
     return [photo valueForKeyPath:FLICKR_PHOTO_DESCRIPTION];
 }
 

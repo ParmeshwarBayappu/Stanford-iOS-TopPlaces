@@ -8,6 +8,7 @@
 
 #import "PhotoViewController.h"
 #import "FlickrFetcher.h"
+#import "PhotosListTableViewController.h"
 
 @interface PhotoViewController () <UIScrollViewDelegate>
 
@@ -31,6 +32,8 @@
     self.scrollView.minimumZoomScale = 0.2;
     self.scrollView.maximumZoomScale = 2.0;
     self.scrollView.delegate = self;
+
+    [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];
 
 
 //    NSDictionary *photo = @{

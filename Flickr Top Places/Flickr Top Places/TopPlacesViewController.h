@@ -10,4 +10,5 @@
 
 @interface TopPlacesViewController : UITableViewController
 
++ (NSString *)getNameOfPlace:(NSDictionary *)place;
 @end

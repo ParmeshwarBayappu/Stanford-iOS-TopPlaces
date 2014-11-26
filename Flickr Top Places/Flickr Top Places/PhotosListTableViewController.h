@@ -12,4 +12,5 @@
 
 @property (nonatomic) NSDictionary *placeOfPhotos;
 
++ (NSString *)titleForPhoto:(NSDictionary *)photo;
 @end
