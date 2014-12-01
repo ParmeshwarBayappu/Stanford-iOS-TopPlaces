@@ -9,6 +9,7 @@
 #import "PhotoViewController.h"
 #import "FlickrFetcher.h"
 #import "PhotosListTableViewController.h"
+#import "MaxFitImageView.h"
 
 @interface PhotoViewController () <UIScrollViewDelegate>
 
@@ -25,6 +26,8 @@
 @implementation PhotoViewController
 
 - (void)viewDidLoad {
+    NSLog(@"ViewDidLoad() called.");
+    
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self.scrollView addSubview:self.imageView];
@@ -74,7 +77,7 @@
 
 - (UIImageView *)imageView {
     if(!_imageView) {
-        _imageView = [UIImageView new];
+        _imageView = [UIImageView new];//[MaxFitImageView new]; //Part of Option 1. See setImage()
     }
     return _imageView;
 }
@@ -85,11 +88,40 @@
 
 - (void)setImage: (UIImage *)image {
     self.imageView.image = image;
-    [self.imageView sizeToFit];
+    
+    if (image) {
+        // Option 1
+        //    [self.imageView sizeToFit];
+        //    self.scrollView.contentSize = [self.imageView sizeThatFits:CGSizeMake(1, 1)];
+        
+        // Option 2
+        [self sizeImageViewToFitScreen];
+        self.scrollView.contentSize = [self scaledImageSizeThatFitsScreen:image];
+    } else {
+        CGSize contentSize = CGSizeMake(1.0, 1.0); // CGSizeZero not working!!! Any non-zero size ; (0,0) size - likely to hide whole view permanently
+        self.scrollView.contentSize = contentSize;
+    }
 
-    self.scrollView.contentSize = image? image.size : CGSizeMake(1.0, 1.0); // CGSizeZero not working!!! Any non-zero size value is OK. (0,0) size - likely to hide whole view permanently
-    //[self.scrollView setContentOffset:CGPointMake(50.0, 50.0)];
     NSLog(@"SetImage call done");
+}
+
+- (CGSize)scaledImageSizeThatFitsScreen:(UIImage *)image {
+    CGSize viewSize = self.scrollView.bounds.size;
+    CGSize imageSize = image.size;
+    CGFloat scaleFactorWidth = viewSize.width/imageSize.width;
+    CGFloat scaleFactorHeight = viewSize.height/imageSize.height;
+    
+    CGFloat scaleFactor = MAX(scaleFactorWidth, scaleFactorHeight);
+    CGSize fitSize = CGSizeMake(imageSize.width * scaleFactor, imageSize.height * scaleFactor);
+    return fitSize;
+}
+
+- (void)sizeImageViewToFitScreen {
+    CGSize fitSize = [self scaledImageSizeThatFitsScreen:self.image];
+    
+    CGRect currentImageViewRect = self.imageView.frame;
+    currentImageViewRect.size = fitSize;
+    self.imageView.frame = currentImageViewRect;
 }
 
 //fetch image
@@ -137,11 +169,6 @@
     [self fetchImage];
 }
 
-- (void)setScrollView:(UIScrollView *)scrollView {
-    _scrollView = scrollView;
-    _scrollView.contentSize = self.image? self.image.size : CGSizeMake(1024, 1024); // Any non-zero size value is OK. (0,0) size - likely to hide whole view permanently
-    NSLog(@"SetScrollView call done");
-}
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;

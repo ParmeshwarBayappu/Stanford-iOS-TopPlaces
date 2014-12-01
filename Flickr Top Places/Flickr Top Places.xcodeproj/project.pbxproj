@@ -10,6 +10,7 @@
 		5E8225441A200E9C009C530A /* PhotosListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8225431A200E9C009C530A /* PhotosListTableViewController.m */; };
 		5E8225471A2479ED009C530A /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8225461A2479ED009C530A /* PhotoViewController.m */; };
 		5EAF010C1A1DCAC900A6E568 /* TopPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF010B1A1DCAC900A6E568 /* TopPlacesViewController.m */; };
+		5ED36F491A2CEB9E0001EF2A /* MaxFitImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5ED36F481A2CEB9E0001EF2A /* MaxFitImageView.m */; };
 		5EF8D1671A1D32570064BFB4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF8D1661A1D32570064BFB4 /* main.m */; };
 		5EF8D16A1A1D32570064BFB4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF8D1691A1D32570064BFB4 /* AppDelegate.m */; };
 		5EF8D16D1A1D32570064BFB4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EF8D16C1A1D32570064BFB4 /* ViewController.m */; };
@@ -37,6 +38,8 @@
 		5E8225461A2479ED009C530A /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		5EAF010A1A1DCAC900A6E568 /* TopPlacesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TopPlacesViewController.h; sourceTree = "<group>"; };
 		5EAF010B1A1DCAC900A6E568 /* TopPlacesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TopPlacesViewController.m; sourceTree = "<group>"; };
+		5ED36F471A2CEB9E0001EF2A /* MaxFitImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxFitImageView.h; sourceTree = "<group>"; };
+		5ED36F481A2CEB9E0001EF2A /* MaxFitImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaxFitImageView.m; sourceTree = "<group>"; };
 		5EF8D1611A1D32570064BFB4 /* Flickr Top Places.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Flickr Top Places.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EF8D1651A1D32570064BFB4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5EF8D1661A1D32570064BFB4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -102,6 +105,8 @@
 				5EF8D16E1A1D32570064BFB4 /* Main.storyboard */,
 				5E8225451A2479ED009C530A /* PhotoViewController.h */,
 				5E8225461A2479ED009C530A /* PhotoViewController.m */,
+				5ED36F471A2CEB9E0001EF2A /* MaxFitImageView.h */,
+				5ED36F481A2CEB9E0001EF2A /* MaxFitImageView.m */,
 				5E8225421A200E9C009C530A /* PhotosListTableViewController.h */,
 				5E8225431A200E9C009C530A /* PhotosListTableViewController.m */,
 				5EAF010A1A1DCAC900A6E568 /* TopPlacesViewController.h */,
@@ -253,6 +258,7 @@
 				5EF8D16D1A1D32570064BFB4 /* ViewController.m in Sources */,
 				5EF8D16A1A1D32570064BFB4 /* AppDelegate.m in Sources */,
 				5E8225441A200E9C009C530A /* PhotosListTableViewController.m in Sources */,
+				5ED36F491A2CEB9E0001EF2A /* MaxFitImageView.m in Sources */,
 				5EF8D18E1A1D32FF0064BFB4 /* FlickrFetcher.m in Sources */,
 				5EF8D1671A1D32570064BFB4 /* main.m in Sources */,
 				5EAF010C1A1DCAC900A6E568 /* TopPlacesViewController.m in Sources */,
@@ -381,7 +387,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Flickr Top Places/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -392,7 +398,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = "Flickr Top Places/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
