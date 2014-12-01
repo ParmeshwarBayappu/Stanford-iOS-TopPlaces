@@ -10,16 +10,18 @@
 #import "FlickrFetcher.h"
 #import "PhotosListTableViewController.h"
 #import "MaxFitImageView.h"
+#import "MaxFitImageScrollView.h"
 
-@interface PhotoViewController () <UIScrollViewDelegate>
+@interface PhotoViewController () <UIScrollViewDelegate, NotifyLayoutChanges>
 
 //IB Related
-@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet MaxFitImageScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 
 @property (nonatomic) UIImageView *imageView;
 
 @property (nonatomic) UIImage *image;
+@property (nonatomic) BOOL imageZoomed;
 
 @end
 
@@ -35,6 +37,7 @@
     self.scrollView.minimumZoomScale = 0.2;
     self.scrollView.maximumZoomScale = 2.0;
     self.scrollView.delegate = self;
+    self.scrollView.delegateForLayoutChanges = self; //Option 3
 
     [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];
 
@@ -88,6 +91,7 @@
 
 - (void)setImage: (UIImage *)image {
     self.imageView.image = image;
+    self.imageZoomed = false;
     
     if (image) {
         // Option 1
@@ -95,14 +99,41 @@
         //    self.scrollView.contentSize = [self.imageView sizeThatFits:CGSizeMake(1, 1)];
         
         // Option 2
-        [self sizeImageViewToFitScreen];
-        self.scrollView.contentSize = [self scaledImageSizeThatFitsScreen:image];
+        //[self sizeImageViewToFitScreen];
+        //self.scrollView.contentSize = [self scaledImageSizeThatFitsScreen:image];
+        
+        // Option 3
+        // refer to layoutChanged()
+        [self.imageView sizeToFit];
+        self.scrollView.contentSize = image.size;
+        
     } else {
         CGSize contentSize = CGSizeMake(1.0, 1.0); // CGSizeZero not working!!! Any non-zero size ; (0,0) size - likely to hide whole view permanently
         self.scrollView.contentSize = contentSize;
     }
 
     NSLog(@"SetImage call done");
+}
+
+- (void)layoutChanged {
+    NSLog(@"Scrollview scale before: %f", self.scrollView.zoomScale);
+    if(self.image && !self.imageZoomed) {
+        [self.scrollView setZoomScale:[self scaleFactorToFitImage:self.image] animated:true];
+        //Do not treat layout related zoom as user initiated zoom
+        self.imageZoomed = false;
+    }
+    NSLog(@"Scrollview scale after: %f", self.scrollView.zoomScale);
+}
+
+- (CGFloat)scaleFactorToFitImage:(UIImage *)image {
+    
+    CGSize viewSize = self.scrollView.bounds.size;
+    CGSize imageSize = image.size;
+    CGFloat scaleFactorWidth = viewSize.width/imageSize.width;
+    CGFloat scaleFactorHeight = viewSize.height/imageSize.height;
+    
+    CGFloat scaleFactor = MIN(scaleFactorWidth, scaleFactorHeight);
+    return scaleFactor;
 }
 
 - (CGSize)scaledImageSizeThatFitsScreen:(UIImage *)image {
@@ -172,6 +203,11 @@
 
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.imageView;
+}
+
+- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
+    self.imageZoomed = true;
+    NSLog(@"scrollViewWillBeginZooming called");
 }
 
 
