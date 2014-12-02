@@ -8,6 +8,7 @@
 
 #import "TopPlacesViewController.h"
 #import "FlickrFetcher.h"
+#import "PhotosListTableViewController.h"
 
 @interface TopPlacesViewController ()
 
@@ -73,13 +74,12 @@
 - (void)updateTopPlaces {
     //[self printOpQueue];
     self.topPlaces = nil;
-    NSDictionary *propertyListResults = nil;
     NSURL *urlForTopPlaces = [FlickrFetcher URLforTopPlaces];
-    NSError *error;
+    //NSError *error;
 
 //    //Option 1
 //    NSData *jsonResults = [NSData dataWithContentsOfURL:urlForTopPlaces options:0 error:&error];
-//    propertyListResults= [NSJSONSerialization JSONObjectWithData:jsonResults options:0 error:NULL];
+//    NSDictionary propertyListResults= [NSJSONSerialization JSONObjectWithData:jsonResults options:0 error:NULL];
 //    NSLog(@"Top Places response as property list: %@", propertyListResults);
 //    self.topPlaces = [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES];
 
@@ -130,12 +130,8 @@
     return self.sortedCountryToPlaces[section];
 }
 
-- (NSString *)getNameOfPlace:(NSDictionary *)place {
-    return [place valueForKeyPath:FLICKR_PLACE_ID];
-}
-
-- (NSString *)getRestOfNameOfPlace:(NSDictionary *)place {
-    return [place valueForKeyPath:FLICKR_PLACE_ID];
++ (NSString *)getNameOfPlace:(NSDictionary *)place {
+    return [place valueForKeyPath:FLICKR_PLACE_NAME];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
@@ -151,7 +147,7 @@
     NSString *country = [self countryNameForSection:indexPath.section];
     //NSDictionary *topPhotoPlace = (self.topPlaces)[indexPath.row];
     NSDictionary *topPhotoPlace = (self.countriesToPlaces[country])[indexPath.row];
-    cell.textLabel.text = [self getNameOfPlace:topPhotoPlace];
+    cell.textLabel.text = [self.class getNameOfPlace:topPhotoPlace];
     //cell.detailTextLabel.text = [photo valueForKeyPath:FLICKR_PLACE_NAME];
     cell.detailTextLabel.text = [FlickrFetcher extractRestOfNameFromPlaceInformation:topPhotoPlace];
 
@@ -191,8 +187,8 @@
 - (void)sortPlacesInEachCountry {
     for (NSMutableArray *countryToPlaces in self.countriesToPlaces.allValues) {
         [countryToPlaces sortUsingComparator:^NSComparisonResult(NSDictionary * place1, NSDictionary * place2) {
-            NSString *place1Name = [self getNameOfPlace:place1];
-            NSString *place2Name = [self getNameOfPlace:place2];
+            NSString *place1Name = [self.class getNameOfPlace:place1];
+            NSString *place2Name = [self.class getNameOfPlace:place2];
             return [place1Name compare:place2Name];
         }];
     }
@@ -208,14 +204,24 @@
     [existingPlaceListForCountry addObject:place];
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+
+    if([segue.identifier isEqualToString:@"Photos For Place"]) {
+        PhotosListTableViewController * destViewController = segue.destinationViewController;
+        UITableViewCell *selection = sender;
+        NSIndexPath *indexPath =  [self.tableView indexPathForCell:selection];
+        NSString *country = [self countryNameForSection:indexPath.section];
+        NSDictionary *topPhotoPlace = (self.countriesToPlaces[country])[indexPath.row];
+
+        destViewController.placeOfPhotos = topPhotoPlace;
+    }
 }
-*/
+
 
 @end

@@ -9,4 +9,3 @@
 //
 
 #define FlickrAPIKey @"c9c0ae46b75d600f3f8351afc4a5d55c"
-//Secret: e11562b819945184
