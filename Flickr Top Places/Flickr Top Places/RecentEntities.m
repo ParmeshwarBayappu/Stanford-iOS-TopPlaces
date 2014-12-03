@@ -22,26 +22,30 @@ const int kMaxRecentEntries = 10;
     return [NSUserDefaults standardUserDefaults];
 }
 
-+ (NSArray *)recents{
-    NSArray * recents = [[self userDefaults] objectForKey:kRecentEntitiesKey];
+-(NSInteger)maxEntries {
+    return 10;
+}
+
+- (NSArray *)recents{
+    NSArray * recents = [[self.class userDefaults] objectForKey:kRecentEntitiesKey];
     if (!recents) {
         recents = [NSArray new];
     }
     return recents;
 }
 
-+ (void)addRecent:(NSDictionary *)entity {
+- (void)addRecent:(NSDictionary *)entity {
     NSMutableArray *recentEntities = [[self recents] mutableCopy];
-    [self removeMatchingEntityInArray:recentEntities entityToMatch:entity];
+    [self.class removeMatchingEntityInArray:recentEntities entityToMatch:entity];
     [recentEntities addObject:entity];
     
     if(recentEntities.count >kMaxRecentEntries) {
         [recentEntities removeObjectAtIndex:0];
     }
     
-    [[self userDefaults] setObject:recentEntities forKey:kRecentEntitiesKey];
+    [[self.class userDefaults] setObject:recentEntities forKey:kRecentEntitiesKey];
     
-    [self LogEntities:recentEntities];
+    [self.class LogEntities:recentEntities];
 }
 
 + (void)removeMatchingEntityInArray: (NSMutableArray *)recentEntities entityToMatch:(NSDictionary *)entityToMatch {
@@ -64,6 +68,19 @@ const int kMaxRecentEntries = 10;
     for (NSDictionary *entity in entities) {
         NSLog(@" %@", [self primaryKeyInEntity:entity]);
     }
+}
+
+// Creates a singleton instance for the invoking class (this or its derived class)
++ (instancetype) sharedInstance {
+    
+    static RecentEntities *sharedInstance;
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [self.class new];
+    });
+    
+    return sharedInstance;
 }
 
 @end

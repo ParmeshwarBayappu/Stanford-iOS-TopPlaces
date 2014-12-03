@@ -10,11 +10,17 @@
 
 @interface RecentEntities : NSObject
 
-+ (NSArray *)recents;
+//override as appropriate in subclass
+@property (nonatomic, readonly) NSInteger maxEntries;
 
-+(void)addRecent: (NSDictionary *)entity;
+@property (nonatomic, readonly) NSArray *recents;
+
+- (void)addRecent: (NSDictionary *)entity;
 
 // Abstract: Must override in subclass
 + (NSObject *)primaryKeyInEntity: (NSDictionary *)entity;
+
+// Given that this is an abstract class, is it approrpiate to have a sharedInstance creation in base (abstract) class?
++ (instancetype)sharedInstance;
 
 @end

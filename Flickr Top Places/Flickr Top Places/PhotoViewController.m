@@ -23,7 +23,7 @@
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) BOOL imageZoomed;
-//@property (nonatomic) RecentEntities *recents;
+@property (nonatomic, readonly) RecentPlaces *recents;
 
 @end
 
@@ -71,10 +71,10 @@
 
 }
 
-//- (RecentEntities *)recents{
-//    
-//    [RecentEntities ]
-//}
+- (RecentPlaces *)recents{
+    
+    return [RecentPlaces sharedInstance];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -204,7 +204,7 @@
 - (void)setPhotoMetaData:(NSDictionary *)photoMetaData {
     _photoMetaData = photoMetaData;
     //NSLog(@"Photo set to : %@", photoMetaData);
-    [RecentPlaces addRecent:photoMetaData];
+    [self.recents addRecent:photoMetaData];
     [self fetchImage];
 }
 
