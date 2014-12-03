@@ -11,6 +11,7 @@
 #import "PhotosListTableViewController.h"
 #import "MaxFitImageView.h"
 #import "MaxFitImageScrollView.h"
+#import "RecentPlaces.h"
 
 @interface PhotoViewController () <UIScrollViewDelegate, NotifyLayoutChanges>
 
@@ -22,13 +23,14 @@
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) BOOL imageZoomed;
+//@property (nonatomic) RecentEntities *recents;
 
 @end
 
 @implementation PhotoViewController
 
 - (void)viewDidLoad {
-    NSLog(@"ViewDidLoad() called.");
+    //NSLog(@"ViewDidLoad() called.");
     
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -68,6 +70,11 @@
 //    self.photoMetaData = photo;
 
 }
+
+//- (RecentEntities *)recents{
+//    
+//    [RecentEntities ]
+//}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -112,17 +119,17 @@
         self.scrollView.contentSize = contentSize;
     }
 
-    NSLog(@"SetImage call done");
+    //NSLog(@"SetImage call done");
 }
 
 - (void)layoutChanged {
-    NSLog(@"Scrollview scale before: %f", self.scrollView.zoomScale);
+    //NSLog(@"Scrollview scale before: %f", self.scrollView.zoomScale);
     if(self.image && !self.imageZoomed) {
         [self.scrollView setZoomScale:[self scaleFactorToFitImage:self.image] animated:true];
         //Do not treat layout related zoom as user initiated zoom
         self.imageZoomed = false;
     }
-    NSLog(@"Scrollview scale after: %f", self.scrollView.zoomScale);
+    //NSLog(@"Scrollview scale after: %f", self.scrollView.zoomScale);
 }
 
 - (CGFloat)scaleFactorToFitImage:(UIImage *)image {
@@ -157,7 +164,7 @@
 
 //fetch image
 - (void)fetchImage {
-    NSLog(@"Fetch Image called");
+    //NSLog(@"Fetch Image called");
 
     //self.photos = nil;
 
@@ -196,7 +203,8 @@
 
 - (void)setPhotoMetaData:(NSDictionary *)photoMetaData {
     _photoMetaData = photoMetaData;
-    NSLog(@"Photo set to : %@", photoMetaData);
+    //NSLog(@"Photo set to : %@", photoMetaData);
+    [RecentPlaces addRecent:photoMetaData];
     [self fetchImage];
 }
 
@@ -207,7 +215,7 @@
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
     self.imageZoomed = true;
-    NSLog(@"scrollViewWillBeginZooming called");
+    //NSLog(@"scrollViewWillBeginZooming called");
 }
 
 
