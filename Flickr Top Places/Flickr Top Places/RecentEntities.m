@@ -44,6 +44,9 @@ const int kMaxRecentEntries = 10;
     }
     
     [[self.class userDefaults] setObject:recentEntities forKey:kRecentEntitiesKey];
+    if(self.changeNotificationDelegate) {
+        [self.changeNotificationDelegate recentsChangedToEntities:recentEntities];
+    }
     
     [self.class LogEntities:recentEntities];
 }

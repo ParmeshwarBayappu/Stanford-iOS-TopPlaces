@@ -17,39 +17,12 @@
                     </tabBar>
                     <connections>
                         <segue destination="7ew-lv-7OE" kind="relationship" relationship="viewControllers" id="1DB-L8-WrT"/>
-                        <segue destination="NQm-Ho-Inl" kind="relationship" relationship="viewControllers" id="u6r-sr-LCL"/>
+                        <segue destination="jWy-Re-1ND" kind="relationship" relationship="viewControllers" id="kOW-Ts-DZt"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWz-PJ-cSU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="468" y="748"/>
-        </scene>
-        <!--Recents-->
-        <scene sceneID="BsK-bJ-2ST">
-            <objects>
-                <tableViewController id="NQm-Ho-Inl" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="yNC-nY-aAU">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="Pwb-i8-uMD">
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Pwb-i8-uMD" id="j5r-uw-YQq">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="NQm-Ho-Inl" id="3oo-45-Dzi"/>
-                            <outlet property="delegate" destination="NQm-Ho-Inl" id="mOo-SH-q09"/>
-                        </connections>
-                    </tableView>
-                    <tabBarItem key="tabBarItem" title="Recents" id="CIR-1d-5vL"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="lK1-VB-j5X" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1158" y="763"/>
         </scene>
         <!--Photo-->
         <scene sceneID="0lL-g9-e8V">
@@ -63,8 +36,8 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
-                                <rect key="frame" x="290" y="234" width="20" height="20"/>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
+                                <rect key="frame" x="290" y="259" width="20" height="20"/>
                             </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-QB-uSA" customClass="MaxFitImageScrollView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
@@ -151,6 +124,23 @@
             </objects>
             <point key="canvasLocation" x="1418" y="60"/>
         </scene>
+        <!--Recently Viewed-->
+        <scene sceneID="mzT-I1-CNw">
+            <objects>
+                <navigationController id="jWy-Re-1ND" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Recently Viewed" id="j4M-TC-82n"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Hdq-l5-Cvz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="zvm-Wx-8la" kind="relationship" relationship="rootViewController" id="GCO-7y-irO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sfT-uy-0NR" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1178" y="737"/>
+        </scene>
         <!--Photos List-->
         <scene sceneID="akA-wo-KyS">
             <objects>
@@ -195,6 +185,7 @@
                         </connections>
                     </tableView>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="dfj-Cy-bM3"/>
                     <connections>
                         <outlet property="activityIndicator" destination="oVX-BL-FpL" id="UVj-aC-SWb"/>
                     </connections>
@@ -224,4 +215,7 @@
             <point key="canvasLocation" x="562" y="70"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="GCO-7y-irO"/>
+    </inferredMetricsTieBreakers>
 </document>

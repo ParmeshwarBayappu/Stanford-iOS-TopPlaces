@@ -10,6 +10,7 @@
 #import "FlickrFetcher.h"
 #import "PhotoViewController.h"
 #import "TopPlacesViewController.h"
+#import "RecentPlaces.h"
 
 @interface PhotosListTableViewController ()
 
@@ -31,13 +32,28 @@
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterX multiplier:1.0 constant:0.0]];
     [self.tableView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityIndicator attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.view attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0.0]];
 
-    [self setTitle:[TopPlacesViewController getNameOfPlace:[self placeOfPhotos]]];
+    if (self.placeOfPhotos) {
+        [self setTitle:[TopPlacesViewController getNameOfPlace:[self placeOfPhotos]]];
+    } else {
+        [self setTitle:@"Ur's recently :)"];
+        [RecentPlaces sharedInstance].changeNotificationDelegate = self;
+        [self setPhotosToRecent];
+    }
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+- (void)setPhotosToRecent {
+    self.photos = [[RecentPlaces sharedInstance] recents];
+}
+
+- (void)recentsChangedToEntities: (NSArray *)entities {
+    self.photos = entities;
+}
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -77,6 +93,7 @@
 - (void)setPhotos:(NSArray *)photos {
     _photos = photos;
     [self.tableView reloadData];
+    [self.activityIndicator stopAnimating];
 }
 
 #define MAX_PHOTOS_IN_RESULTS 50
@@ -105,7 +122,6 @@
         } else {
             NSLog(@"Error fetching photos list!");
         }
-        [self.activityIndicator stopAnimating];
     }];
     [downloadTask resume];
     //[downloadTask performSelector:@selector(resume) withObject:nil afterDelay:5];
