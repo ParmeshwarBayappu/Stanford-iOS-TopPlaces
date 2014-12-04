@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "RecentEntities.h"
 
-@interface PhotosListTableViewController : UITableViewController
+@interface PhotosListTableViewController : UITableViewController <RecentsChangeNotification>
 
 @property (nonatomic) NSDictionary *placeOfPhotos;
 
