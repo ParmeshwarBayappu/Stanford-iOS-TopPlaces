@@ -37,10 +37,10 @@ const int kMaxRecentEntries = 10;
 - (void)addRecent:(NSDictionary *)entity {
     NSMutableArray *recentEntities = [[self recents] mutableCopy];
     [self.class removeMatchingEntityInArray:recentEntities entityToMatch:entity];
-    [recentEntities addObject:entity];
+    [recentEntities insertObject:entity atIndex:0];
     
     if(recentEntities.count >kMaxRecentEntries) {
-        [recentEntities removeObjectAtIndex:0];
+        [recentEntities removeLastObject];
     }
     
     [[self.class userDefaults] setObject:recentEntities forKey:kRecentEntitiesKey];

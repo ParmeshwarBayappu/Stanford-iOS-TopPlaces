@@ -16,6 +16,7 @@
 
 @property (nonatomic) NSArray *photos;
 @property (nonatomic, readonly) NSString *placeID;
+@property (nonatomic, readonly) RecentPlaces *recents;
 
 //IB properties
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
@@ -36,7 +37,7 @@
         [self setTitle:[TopPlacesViewController getNameOfPlace:[self placeOfPhotos]]];
     } else {
         [self setTitle:@"Ur's recently :)"];
-        [RecentPlaces sharedInstance].changeNotificationDelegate = self;
+        self.recents.changeNotificationDelegate = self;
         [self setPhotosToRecent];
     }
     // Uncomment the following line to preserve selection between presentations.
@@ -44,6 +45,11 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+
+- (RecentPlaces *)recents{
+    
+    return [RecentPlaces sharedInstance];
 }
 
 - (void)setPhotosToRecent {
@@ -199,6 +205,9 @@
         NSDictionary *selectedPhoto = self.photos[indexPath.row];
 
         destViewController.photoMetaData = selectedPhoto;
+        if(self.placeOfPhotos) {
+            [self.recents addRecent:selectedPhoto];
+        }
     }
 
 }

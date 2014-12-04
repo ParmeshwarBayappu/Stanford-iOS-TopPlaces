@@ -11,7 +11,6 @@
 #import "PhotosListTableViewController.h"
 #import "MaxFitImageView.h"
 #import "MaxFitImageScrollView.h"
-#import "RecentPlaces.h"
 
 @interface PhotoViewController () <UIScrollViewDelegate, NotifyLayoutChanges>
 
@@ -23,7 +22,6 @@
 
 @property (nonatomic) UIImage *image;
 @property (nonatomic) BOOL imageZoomed;
-@property (nonatomic, readonly) RecentPlaces *recents;
 
 @end
 
@@ -69,11 +67,6 @@
 //    };
 //    self.photoMetaData = photo;
 
-}
-
-- (RecentPlaces *)recents{
-    
-    return [RecentPlaces sharedInstance];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -204,7 +197,6 @@
 - (void)setPhotoMetaData:(NSDictionary *)photoMetaData {
     _photoMetaData = photoMetaData;
     //NSLog(@"Photo set to : %@", photoMetaData);
-    [self.recents addRecent:photoMetaData];
     [self fetchImage];
 }
 
