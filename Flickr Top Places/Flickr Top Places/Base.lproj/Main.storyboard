@@ -33,42 +33,30 @@
                         <viewControllerLayoutGuide type="bottom" id="wzl-ep-aWx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="F90-Ea-u3N">
-                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7R-SQ-PxL">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="w0h-cf-Nlw"/>
-                                </constraints>
-                                <items>
-                                    <navigationItem id="yIe-em-Xg4"/>
-                                </items>
-                            </navigationBar>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <rect key="frame" x="290" y="258" width="20" height="20"/>
                             </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-QB-uSA" customClass="MaxFitImageScrollView">
-                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="zvM-3L-raK" secondAttribute="centerX" id="3YO-zp-rgL"/>
                             <constraint firstItem="7yH-QB-uSA" firstAttribute="bottom" secondItem="wzl-ep-aWx" secondAttribute="top" id="CBg-pI-SSE"/>
-                            <constraint firstItem="J7R-SQ-PxL" firstAttribute="top" secondItem="F90-Ea-u3N" secondAttribute="top" id="Wz7-nd-Nlr"/>
+                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="T3f-hO-hxH" secondAttribute="bottom" id="Sq7-D6-HBf"/>
                             <constraint firstAttribute="centerY" secondItem="zvM-3L-raK" secondAttribute="centerY" id="aZ7-is-nRH"/>
-                            <constraint firstItem="J7R-SQ-PxL" firstAttribute="leading" secondItem="F90-Ea-u3N" secondAttribute="leading" id="dBI-L0-ShJ"/>
-                            <constraint firstAttribute="trailing" secondItem="J7R-SQ-PxL" secondAttribute="trailing" id="day-BC-QRp"/>
                             <constraint firstItem="7yH-QB-uSA" firstAttribute="leading" secondItem="F90-Ea-u3N" secondAttribute="leading" id="jKD-lE-XjZ"/>
-                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="J7R-SQ-PxL" secondAttribute="bottom" id="jPn-di-hxZ"/>
                             <constraint firstAttribute="trailing" secondItem="7yH-QB-uSA" secondAttribute="trailing" id="q79-h3-U4b"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
+                    <navigationItem key="navigationItem" id="uwX-4L-Zt0"/>
                     <connections>
                         <outlet property="activityIndicator" destination="zvM-3L-raK" id="RBy-0E-VNa"/>
-                        <outlet property="custNavItem" destination="yIe-em-Xg4" id="KB0-Ji-FD6"/>
                         <outlet property="scrollView" destination="7yH-QB-uSA" id="6lG-Pv-SAF"/>
                     </connections>
                 </viewController>
@@ -154,6 +142,22 @@
             </objects>
             <point key="canvasLocation" x="1204" y="915"/>
         </scene>
+        <!--Detail Nav Controller-->
+        <scene sceneID="e5i-SK-sfZ">
+            <objects>
+                <navigationController title="Detail Nav Controller" id="9GJ-fI-TXO" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="kjl-yq-lTb">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="AhE-pB-kkC" kind="relationship" relationship="rootViewController" id="IsF-Td-ZFI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XcT-Rg-BVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="833" y="-942"/>
+        </scene>
         <!--Photos List-->
         <scene sceneID="akA-wo-KyS">
             <objects>
@@ -188,7 +192,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <segue destination="AhE-pB-kkC" kind="showDetail" identifier="To Photo Page" id="JoV-eq-Qc0"/>
+                                    <segue destination="9GJ-fI-TXO" kind="showDetail" identifier="To Photo Page" id="Hng-e1-Z1Q"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -212,8 +216,8 @@
             <objects>
                 <splitViewController id="AYX-K7-vSm" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="AhE-pB-kkC" kind="relationship" relationship="detailViewController" id="hWh-Rf-hEz"/>
                         <segue destination="qqD-uu-eth" kind="relationship" relationship="masterViewController" id="d4C-ec-Nt9"/>
+                        <segue destination="9GJ-fI-TXO" kind="relationship" relationship="detailViewController" id="5rm-fa-yJf"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWj-rK-WTp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -242,7 +246,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hWh-Rf-hEz"/>
         <segue reference="GCO-7y-irO"/>
+        <segue reference="Hng-e1-Z1Q"/>
     </inferredMetricsTieBreakers>
 </document>

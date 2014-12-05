@@ -44,7 +44,7 @@
     
     if(self.splitViewController) {
         self.splitViewController.delegate = self;
-        self.custNavItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        self.navigationItem.leftBarButtonItem  = self.splitViewController.displayModeButtonItem;
     }
 
 

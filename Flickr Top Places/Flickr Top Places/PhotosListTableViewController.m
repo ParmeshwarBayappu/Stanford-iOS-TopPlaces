@@ -199,7 +199,7 @@
     // Pass the selected object to the new view controller.
 
     if([segue.identifier isEqualToString:@"To Photo Page"]) {
-        PhotoViewController * destViewController = segue.destinationViewController;
+        PhotoViewController * destViewController = (PhotoViewController *)((UINavigationController *)segue.destinationViewController).topViewController;
         UITableViewCell *selection = sender;
         NSIndexPath *indexPath =  [self.tableView indexPathForCell:selection];
         NSDictionary *selectedPhoto = self.photos[indexPath.row];
