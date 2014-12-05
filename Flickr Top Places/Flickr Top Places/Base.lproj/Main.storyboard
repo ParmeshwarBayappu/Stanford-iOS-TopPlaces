@@ -36,26 +36,39 @@
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
-                                <rect key="frame" x="290" y="259" width="20" height="20"/>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="J7R-SQ-PxL">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="w0h-cf-Nlw"/>
+                                </constraints>
+                                <items>
+                                    <navigationItem id="yIe-em-Xg4"/>
+                                </items>
+                            </navigationBar>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
                             </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-QB-uSA" customClass="MaxFitImageScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="44" width="600" height="556"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="zvM-3L-raK" secondAttribute="centerX" id="3YO-zp-rgL"/>
                             <constraint firstItem="7yH-QB-uSA" firstAttribute="bottom" secondItem="wzl-ep-aWx" secondAttribute="top" id="CBg-pI-SSE"/>
+                            <constraint firstItem="J7R-SQ-PxL" firstAttribute="top" secondItem="F90-Ea-u3N" secondAttribute="top" id="Wz7-nd-Nlr"/>
                             <constraint firstAttribute="centerY" secondItem="zvM-3L-raK" secondAttribute="centerY" id="aZ7-is-nRH"/>
+                            <constraint firstItem="J7R-SQ-PxL" firstAttribute="leading" secondItem="F90-Ea-u3N" secondAttribute="leading" id="dBI-L0-ShJ"/>
+                            <constraint firstAttribute="trailing" secondItem="J7R-SQ-PxL" secondAttribute="trailing" id="day-BC-QRp"/>
                             <constraint firstItem="7yH-QB-uSA" firstAttribute="leading" secondItem="F90-Ea-u3N" secondAttribute="leading" id="jKD-lE-XjZ"/>
+                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="J7R-SQ-PxL" secondAttribute="bottom" id="jPn-di-hxZ"/>
                             <constraint firstAttribute="trailing" secondItem="7yH-QB-uSA" secondAttribute="trailing" id="q79-h3-U4b"/>
-                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="F90-Ea-u3N" secondAttribute="top" id="z2r-Hl-mTt"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <connections>
                         <outlet property="activityIndicator" destination="zvM-3L-raK" id="RBy-0E-VNa"/>
+                        <outlet property="custNavItem" destination="yIe-em-Xg4" id="KB0-Ji-FD6"/>
                         <outlet property="scrollView" destination="7yH-QB-uSA" id="6lG-Pv-SAF"/>
                     </connections>
                 </viewController>
@@ -207,10 +220,10 @@
             </objects>
             <point key="canvasLocation" x="-120" y="-1075"/>
         </scene>
-        <!--Top Places-->
+        <!--Master Nav SB title-->
         <scene sceneID="ncQ-fB-OHe">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7ew-lv-7OE" sceneMemberID="viewController">
+                <navigationController title="Master Nav SB title" automaticallyAdjustsScrollViewInsets="NO" id="7ew-lv-7OE" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <tabBarItem key="tabBarItem" title="Top Places" id="PPT-yY-cMC"/>
                     <toolbarItems/>
