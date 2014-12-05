@@ -5,10 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
-        <!--Tab Bar Controller-->
+        <!--Places / Recents-->
         <scene sceneID="MsM-wt-IzT">
             <objects>
-                <tabBarController id="qqD-uu-eth" sceneMemberID="viewController">
+                <tabBarController title="Places / Recents" id="qqD-uu-eth" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Cpn-CE-1Xi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -212,8 +212,8 @@
             <objects>
                 <splitViewController id="AYX-K7-vSm" sceneMemberID="viewController">
                     <connections>
-                        <segue destination="7ew-lv-7OE" kind="relationship" relationship="masterViewController" id="LhQ-AN-Kx0"/>
                         <segue destination="AhE-pB-kkC" kind="relationship" relationship="detailViewController" id="hWh-Rf-hEz"/>
+                        <segue destination="qqD-uu-eth" kind="relationship" relationship="masterViewController" id="d4C-ec-Nt9"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWj-rK-WTp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -242,8 +242,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="LhQ-AN-Kx0"/>
         <segue reference="hWh-Rf-hEz"/>
-        <segue reference="Mfm-IA-be0"/>
+        <segue reference="GCO-7y-irO"/>
     </inferredMetricsTieBreakers>
 </document>
