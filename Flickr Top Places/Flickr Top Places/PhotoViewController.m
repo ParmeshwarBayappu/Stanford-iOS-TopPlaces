@@ -110,6 +110,8 @@
         
         // Option 3
         // refer to layoutChanged()
+        self.imageZoomed = false;
+        self.scrollView.zoomScale = 1.0;
         [self.imageView sizeToFit];
         self.scrollView.contentSize = image.size;
         
@@ -204,6 +206,7 @@
     _photoMetaData = photoMetaData;
     //NSLog(@"Photo set to : %@", photoMetaData);
     [self fetchImage];
+    [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];    
 }
 
 

@@ -46,8 +46,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="zvM-3L-raK" secondAttribute="centerX" id="3YO-zp-rgL"/>
-                            <constraint firstItem="7yH-QB-uSA" firstAttribute="bottom" secondItem="wzl-ep-aWx" secondAttribute="top" id="CBg-pI-SSE"/>
-                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="T3f-hO-hxH" secondAttribute="bottom" id="Sq7-D6-HBf"/>
+                            <constraint firstAttribute="bottom" secondItem="7yH-QB-uSA" secondAttribute="bottom" id="6vW-p3-meu"/>
+                            <constraint firstItem="7yH-QB-uSA" firstAttribute="top" secondItem="T3f-hO-hxH" secondAttribute="bottom" id="LMm-cH-JJW"/>
                             <constraint firstAttribute="centerY" secondItem="zvM-3L-raK" secondAttribute="centerY" id="aZ7-is-nRH"/>
                             <constraint firstItem="7yH-QB-uSA" firstAttribute="leading" secondItem="F90-Ea-u3N" secondAttribute="leading" id="jKD-lE-XjZ"/>
                             <constraint firstAttribute="trailing" secondItem="7yH-QB-uSA" secondAttribute="trailing" id="q79-h3-U4b"/>
@@ -62,7 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gOl-bS-Nkj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2647" y="-426"/>
+            <point key="canvasLocation" x="2647" y="-433"/>
         </scene>
         <!--Top Places-->
         <scene sceneID="CD9-y1-fsy">
@@ -191,9 +191,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="9GJ-fI-TXO" kind="showDetail" identifier="To Photo Page" id="Hng-e1-Z1Q"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -247,6 +244,5 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="GCO-7y-irO"/>
-        <segue reference="Hng-e1-Z1Q"/>
     </inferredMetricsTieBreakers>
 </document>
