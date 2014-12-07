@@ -8,7 +8,7 @@
         <!--Places / Recents-->
         <scene sceneID="MsM-wt-IzT">
             <objects>
-                <tabBarController title="Places / Recents" id="qqD-uu-eth" sceneMemberID="viewController">
+                <tabBarController title="Places / Recents" id="qqD-uu-eth" customClass="TabBarMasterController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Cpn-CE-1Xi">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -33,14 +33,14 @@
                         <viewControllerLayoutGuide type="bottom" id="wzl-ep-aWx"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="F90-Ea-u3N">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="zvM-3L-raK">
-                                <rect key="frame" x="290" y="258" width="20" height="20"/>
+                                <rect key="frame" x="290" y="234" width="20" height="20"/>
                             </activityIndicatorView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7yH-QB-uSA" customClass="MaxFitImageScrollView">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="487"/>
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -146,6 +146,7 @@
         <scene sceneID="e5i-SK-sfZ">
             <objects>
                 <navigationController title="Detail Nav Controller" id="9GJ-fI-TXO" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Photo 1" id="va8-jx-AQo"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="kjl-yq-lTb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -156,7 +157,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XcT-Rg-BVJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="833" y="-942"/>
+            <point key="canvasLocation" x="1513" y="-1066"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="bdv-KE-nmS">
+            <objects>
+                <tabBarController id="sEu-f7-X37" sceneMemberID="viewController">
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="Vjo-Ij-nvz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="9GJ-fI-TXO" kind="relationship" relationship="viewControllers" id="HaG-lm-vTp"/>
+                        <segue destination="9GJ-fI-TXO" kind="relationship" relationship="viewControllers" id="rgV-eI-lzO"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dKu-iL-6KE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="776" y="-1109"/>
         </scene>
         <!--Photos List-->
         <scene sceneID="akA-wo-KyS">
@@ -214,7 +234,7 @@
                 <splitViewController id="AYX-K7-vSm" sceneMemberID="viewController">
                     <connections>
                         <segue destination="qqD-uu-eth" kind="relationship" relationship="masterViewController" id="d4C-ec-Nt9"/>
-                        <segue destination="9GJ-fI-TXO" kind="relationship" relationship="detailViewController" id="5rm-fa-yJf"/>
+                        <segue destination="sEu-f7-X37" kind="relationship" relationship="detailViewController" id="13S-fr-mw9"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YWj-rK-WTp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -243,6 +263,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="GCO-7y-irO"/>
+        <segue reference="rgV-eI-lzO"/>
+        <segue reference="Mfm-IA-be0"/>
     </inferredMetricsTieBreakers>
 </document>

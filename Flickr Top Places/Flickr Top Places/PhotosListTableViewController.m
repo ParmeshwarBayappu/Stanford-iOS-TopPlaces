@@ -11,6 +11,7 @@
 #import "PhotoViewController.h"
 #import "TopPlacesViewController.h"
 #import "RecentPlaces.h"
+#import "TabBarMasterController.h"
 
 @interface PhotosListTableViewController () <UITableViewDelegate>
 
@@ -223,8 +224,10 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSDictionary *selectedPhoto = self.photos[indexPath.row];
-    UIViewController * destinationViewController = self.splitViewController.viewControllers[1];
+    TabBarMasterController * masterTBC = (TabBarMasterController *)self.tabBarController;
+    UIViewController * masterViewController = self.navigationController;//self.placeOfPhotos? self.navigationController : self;
     
+    UIViewController * destinationViewController = [masterTBC detailViewControllerForMaster:masterViewController];    
     [self onPhotoSelected:selectedPhoto destinationViewController:destinationViewController];
 }
 
