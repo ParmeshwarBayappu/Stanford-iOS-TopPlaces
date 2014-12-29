@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E24F38D1A324C5B00EBA28D /* TabBarMasterController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E24F38C1A324C5B00EBA28D /* TabBarMasterController.m */; };
 		5E8225441A200E9C009C530A /* PhotosListTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8225431A200E9C009C530A /* PhotosListTableViewController.m */; };
 		5E8225471A2479ED009C530A /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5E8225461A2479ED009C530A /* PhotoViewController.m */; };
 		5EAF010C1A1DCAC900A6E568 /* TopPlacesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5EAF010B1A1DCAC900A6E568 /* TopPlacesViewController.m */; };
@@ -36,8 +35,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		5E24F38B1A324C5B00EBA28D /* TabBarMasterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarMasterController.h; sourceTree = "<group>"; };
-		5E24F38C1A324C5B00EBA28D /* TabBarMasterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarMasterController.m; sourceTree = "<group>"; };
 		5E8225421A200E9C009C530A /* PhotosListTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotosListTableViewController.h; sourceTree = "<group>"; };
 		5E8225431A200E9C009C530A /* PhotosListTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotosListTableViewController.m; sourceTree = "<group>"; };
 		5E8225451A2479ED009C530A /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
@@ -119,8 +116,6 @@
 				5EF8D16B1A1D32570064BFB4 /* ViewController.h */,
 				5EF8D16C1A1D32570064BFB4 /* ViewController.m */,
 				5EF8D16E1A1D32570064BFB4 /* Main.storyboard */,
-				5E24F38B1A324C5B00EBA28D /* TabBarMasterController.h */,
-				5E24F38C1A324C5B00EBA28D /* TabBarMasterController.m */,
 				5ED36F4A1A2D1BC00001EF2A /* MaxFitImageScrollView.h */,
 				5ED36F4B1A2D1BC00001EF2A /* MaxFitImageScrollView.m */,
 				5E8225451A2479ED009C530A /* PhotoViewController.h */,
@@ -281,7 +276,6 @@
 				5E8225441A200E9C009C530A /* PhotosListTableViewController.m in Sources */,
 				5ED36F521A2F97C60001EF2A /* RecentPlaces.m in Sources */,
 				5ED36F491A2CEB9E0001EF2A /* MaxFitImageView.m in Sources */,
-				5E24F38D1A324C5B00EBA28D /* TabBarMasterController.m in Sources */,
 				5ED36F4C1A2D1BC00001EF2A /* MaxFitImageScrollView.m in Sources */,
 				5EF8D18E1A1D32FF0064BFB4 /* FlickrFetcher.m in Sources */,
 				5EF8D1671A1D32570064BFB4 /* main.m in Sources */,

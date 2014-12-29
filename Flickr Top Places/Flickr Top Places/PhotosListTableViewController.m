@@ -11,7 +11,7 @@
 #import "PhotoViewController.h"
 #import "TopPlacesViewController.h"
 #import "RecentPlaces.h"
-#import "TabBarMasterController.h"
+//#import "TabBarMasterController.h"
 
 @interface PhotosListTableViewController () <UITableViewDelegate>
 
@@ -199,6 +199,7 @@
 
 - (void)onPhotoSelected: (NSDictionary *)selectedPhoto destinationViewController: (UIViewController *)destinationViewController {
     PhotoViewController * destViewController = (PhotoViewController *)((UINavigationController *)destinationViewController).topViewController;
+    //PhotoViewController * destViewController = (PhotoViewController *)destinationViewController;
     
     destViewController.photoMetaData = selectedPhoto;
     if(self.placeOfPhotos) {
@@ -223,12 +224,13 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSDictionary *selectedPhoto = self.photos[indexPath.row];
-    TabBarMasterController * masterTBC = (TabBarMasterController *)self.tabBarController;
-    UIViewController * masterViewController = self.navigationController;//self.placeOfPhotos? self.navigationController : self;
-    
-    UIViewController * destinationViewController = [masterTBC detailViewControllerForMaster:masterViewController];    
-    [self onPhotoSelected:selectedPhoto destinationViewController:destinationViewController];
+//    NSDictionary *selectedPhoto = self.photos[indexPath.row];
+//    TabBarMasterController * masterTBC = (TabBarMasterController *)self.tabBarController;
+//    UIViewController * masterViewController = self.navigationController;//self.placeOfPhotos? self.navigationController : self;
+//    [self showDetailViewController:masterTBC.detailTabBarController sender:self];//???new
+//    
+//    UIViewController * destinationViewController = [masterTBC detailViewControllerForMaster:masterViewController];    
+//    [self onPhotoSelected:selectedPhoto destinationViewController:destinationViewController];
 }
 
 

@@ -62,7 +62,7 @@
     [self setup];
     
     //self.navigationItem.title = @"NavItem Code";
-    self.navigationController.title = @"Places Title From Code";
+    //self.navigationController.title = @"Places Title From Code";
 }
 
 - (void)setup {
