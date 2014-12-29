@@ -12,11 +12,12 @@
 #import "MaxFitImageView.h"
 #import "MaxFitImageScrollView.h"
 
-@interface PhotoViewController () <UIScrollViewDelegate, NotifyLayoutChanges>
+@interface PhotoViewController () <UIScrollViewDelegate, NotifyLayoutChanges, UISplitViewControllerDelegate>
 
 //IB Related
 @property (weak, nonatomic) IBOutlet MaxFitImageScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UINavigationItem *custNavItem;
 
 @property (nonatomic) UIImageView *imageView;
 
@@ -40,6 +41,14 @@
     self.scrollView.delegateForLayoutChanges = self; //Option 3
 
     [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];
+    
+    if(self.splitViewController) {
+        self.splitViewController.delegate = self;
+        self.navigationItem.leftBarButtonItem  = self.splitViewController.displayModeButtonItem;
+        //self.custNavItem.leftBarButtonItem = self.splitViewController.displayModeButtonItem;
+        self.navigationItem.leftItemsSupplementBackButton = true;
+
+    }
 
 
 //    NSDictionary *photo = @{
@@ -104,6 +113,8 @@
         
         // Option 3
         // refer to layoutChanged()
+        self.imageZoomed = false;
+        self.scrollView.zoomScale = 1.0;
         [self.imageView sizeToFit];
         self.scrollView.contentSize = image.size;
         
@@ -198,6 +209,7 @@
     _photoMetaData = photoMetaData;
     //NSLog(@"Photo set to : %@", photoMetaData);
     [self fetchImage];
+    [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];    
 }
 
 

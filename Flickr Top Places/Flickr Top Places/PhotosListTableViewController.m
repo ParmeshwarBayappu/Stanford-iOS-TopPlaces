@@ -11,8 +11,9 @@
 #import "PhotoViewController.h"
 #import "TopPlacesViewController.h"
 #import "RecentPlaces.h"
+//#import "TabBarMasterController.h"
 
-@interface PhotosListTableViewController ()
+@interface PhotosListTableViewController () <UITableViewDelegate>
 
 @property (nonatomic) NSArray *photos;
 @property (nonatomic, readonly) NSString *placeID;
@@ -40,6 +41,9 @@
         self.recents.changeNotificationDelegate = self;
         [self setPhotosToRecent];
     }
+    
+    self.tableView.delegate = self;
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -193,24 +197,42 @@
 
 #pragma mark - Navigation
 
+- (void)onPhotoSelected: (NSDictionary *)selectedPhoto destinationViewController: (UIViewController *)destinationViewController {
+    PhotoViewController * destViewController = (PhotoViewController *)((UINavigationController *)destinationViewController).topViewController;
+    //PhotoViewController * destViewController = (PhotoViewController *)destinationViewController;
+    
+    destViewController.photoMetaData = selectedPhoto;
+    if(self.placeOfPhotos) {
+        [self.recents addRecent:selectedPhoto];
+    }
+}
+
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
 
     if([segue.identifier isEqualToString:@"To Photo Page"]) {
-        PhotoViewController * destViewController = segue.destinationViewController;
         UITableViewCell *selection = sender;
         NSIndexPath *indexPath =  [self.tableView indexPathForCell:selection];
         NSDictionary *selectedPhoto = self.photos[indexPath.row];
-
-        destViewController.photoMetaData = selectedPhoto;
-        if(self.placeOfPhotos) {
-            [self.recents addRecent:selectedPhoto];
-        }
+        
+        [self onPhotoSelected:selectedPhoto destinationViewController:segue.destinationViewController];
     }
 
 }
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+//    NSDictionary *selectedPhoto = self.photos[indexPath.row];
+//    TabBarMasterController * masterTBC = (TabBarMasterController *)self.tabBarController;
+//    UIViewController * masterViewController = self.navigationController;//self.placeOfPhotos? self.navigationController : self;
+//    [self showDetailViewController:masterTBC.detailTabBarController sender:self];//???new
+//    
+//    UIViewController * destinationViewController = [masterTBC detailViewControllerForMaster:masterViewController];    
+//    [self onPhotoSelected:selectedPhoto destinationViewController:destinationViewController];
+}
+
 
 
 @end

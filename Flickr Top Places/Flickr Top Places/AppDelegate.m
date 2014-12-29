@@ -7,6 +7,7 @@
 //
 
 #import "AppDelegate.h"
+//#import "TabBarMasterController.h"
 
 @interface AppDelegate ()
 
@@ -17,6 +18,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //UISplitViewController *splitVC = (UISplitViewController *) self.window.rootViewController;
+    //TabBarMasterController *splitMVC = (TabBarMasterController *)splitVC.viewControllers.firstObject;
+    //UITabBarController *splitDVC = (UITabBarController *)splitVC.viewControllers.lastObject;
+    //splitMVC.detailTabBarController = splitDVC;
+    
     return YES;
 }
 

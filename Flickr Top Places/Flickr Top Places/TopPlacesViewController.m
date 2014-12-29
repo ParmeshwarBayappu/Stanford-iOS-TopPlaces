@@ -60,6 +60,9 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     [self setup];
+    
+    //self.navigationItem.title = @"NavItem Code";
+    //self.navigationController.title = @"Places Title From Code";
 }
 
 - (void)setup {
@@ -222,6 +225,5 @@
         destViewController.placeOfPhotos = topPhotoPlace;
     }
 }
-
 
 @end
