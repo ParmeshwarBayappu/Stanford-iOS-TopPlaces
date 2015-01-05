@@ -28,7 +28,7 @@
     [super viewDidLoad];
 
     [self setupFetchedResultsController];
-    [self updateTopPlaces];
+    //[self updateTopPlaces];
 }
 
 -(void)setupFetchedResultsController {

@@ -119,6 +119,7 @@
     destViewController.photo = selectedPhoto;
     if(self.placeOfPhotos) {
         selectedPhoto.lastViewed = [NSDate date];
+        [((AppDelegate *)[[UIApplication sharedApplication] delegate]) saveContext];
         NSLog(@"Photo for selected Photo set to %@", selectedPhoto.lastViewed );
        // [self.recents addRecent:selectedPhoto];
     }

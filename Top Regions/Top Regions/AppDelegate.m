@@ -14,6 +14,9 @@
 
 @interface AppDelegate ()
 
+@property (nonatomic) NSURLSession *session;
+@property (strong, nonatomic) NSTimer *flickrForegroundFetchTimer;
+
 @end
 
 @implementation AppDelegate
@@ -26,8 +29,8 @@
     NSDictionary *userInfo = @{ PHOTO_DATABASE_AVAILABILITY_NOTIFICATION_CONTEXT_KEY : self.managedObjectContext };
     [[NSNotificationCenter defaultCenter] postNotificationName:PHOTO_DATABASE_AVAILABILITY_NOTIFICATION object:self userInfo:userInfo];
 
-    //[self updateTopPlaces];
-    
+    [self updateTopPlaces];
+    [self setupForegroundFetchTimer];
     return YES;
 }
 
@@ -142,40 +145,63 @@
 
 #pragma mark -- Fetch
 
-- (void)updateTopPlaces {
-    //[self printOpQueue];
-    //self.topPlaces = nil;
-    NSURL *urlForTopPlaces = [FlickrFetcher URLforTopPlaces];
-    NSURLRequest * request = [NSURLRequest requestWithURL:urlForTopPlaces];
-    NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue: [[NSOperationQueue alloc] init]];//[NSOperationQueue mainQueue]];
-    
-    //[self.refreshControl beginRefreshing]; //mostly unnecessary
-    
-    NSURLSessionDownloadTask *sessionDownloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *localLocation, NSURLResponse *response, NSError *error) {
-        //[self printOpQueue];
-        if(!error) {
-            NSData *jsonResults = [NSData dataWithContentsOfURL:localLocation options:0 error:&error];
-            NSDictionary *propertyListResults= [NSJSONSerialization JSONObjectWithData:jsonResults options:0 error:NULL];
-            //NSLog(@"Top Places response as property list: %@", [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES]);
-            NSArray *flickrTopPlaces = [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES];
-            //NSLog(@"Sending request to relaodData");
-            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-                [Place loadPlacesFromFlickrArray:flickrTopPlaces intoManagedObjectContext:self.managedObjectContext];
-                NSError *error;
-                [self.managedObjectContext save:&error];
-                //[self.tableView reloadData];
-                //[self.refreshControl endRefreshing];
-            }];
-            
-        }   else {
-            NSLog(@"Error:%@", error);
-        }
-        
-    }];
-    [sessionDownloadTask resume];
+- (NSURLSession *) session {
+    if(!_session) {
+        NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+        _session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue: [[NSOperationQueue alloc] init]];//[NSOperationQueue mainQueue]];
+    }
+    return _session;
 }
 
+- (void)updateTopPlaces {
+    // (Re)Download top places unless a download is in progress.
+    [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks, NSArray *uploadTasks, NSArray *downloadTasks) {
+        if(downloadTasks.count){
+            //resume downloads - Q) will they be in paused state ever - with an ephemeralSessionConfiguration?
+            NSLog(@"updateTopPlaces: Resuming existing download task.");
+            [downloadTasks makeObjectsPerformSelector:@selector(resume)];
+        } else {
+            //start new download
+            NSLog(@"updateTopPlaces: Creating new download task.");
+            //[self printOpQueue];
+            NSURL *urlForTopPlaces = [FlickrFetcher URLforTopPlaces];
+            NSURLRequest * request = [NSURLRequest requestWithURL:urlForTopPlaces];
+            
+            NSURLSessionDownloadTask *sessionDownloadTask = [self.session downloadTaskWithRequest:request completionHandler:^(NSURL *localLocation, NSURLResponse *response, NSError *error) {
+                //[self printOpQueue];
+                if(!error) {
+                    NSData *jsonResults = [NSData dataWithContentsOfURL:localLocation options:0 error:&error];
+                    NSDictionary *propertyListResults= [NSJSONSerialization JSONObjectWithData:jsonResults options:0 error:NULL];
+                    //NSLog(@"Top Places response as property list: %@", [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES]);
+                    NSArray *flickrTopPlaces = [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES];
+                    //NSLog(@"Sending request to relaodData");
+                    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                        [Place loadPlacesFromFlickrArray:flickrTopPlaces intoManagedObjectContext:self.managedObjectContext];
+                        NSError *error;
+                        [self.managedObjectContext save:&error];
+                        //[self.tableView reloadData];
+                        //[self.refreshControl endRefreshing];
+                        //[self.flickrForegroundFetchTimer fire];
+                    }];
+                    
+                }   else {
+                    NSLog(@"Error:%@", error);
+                }
+                
+            }];
+            [sessionDownloadTask resume];
+        }
+    }];
+}
 
+#pragma mark -- Timer
+
+- (void)setupForegroundFetchTimer {
+    self.flickrForegroundFetchTimer = [NSTimer  scheduledTimerWithTimeInterval:5*60 target:self selector:@selector(updateTopPlacesForTimer:) userInfo:nil repeats:YES];
+}
+
+-(void)updateTopPlacesForTimer:(NSTimer *)timer {
+    [self updateTopPlaces];
+}
 
 @end
