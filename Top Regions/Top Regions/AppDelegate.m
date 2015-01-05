@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#include "PhotoDatabaseAvailability.h"
+#import "Place+Flickr.h"
+#import "FlickrFetcher.h"
+
 
 @interface AppDelegate ()
 
@@ -17,7 +21,19 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    
+    //Create and notify of managed object context
+    NSDictionary *userInfo = @{ PHOTO_DATABASE_AVAILABILITY_NOTIFICATION_CONTEXT_KEY : self.managedObjectContext };
+    [[NSNotificationCenter defaultCenter] postNotificationName:PHOTO_DATABASE_AVAILABILITY_NOTIFICATION object:self userInfo:userInfo];
+
+    //[self updateTopPlaces];
+    
     return YES;
+}
+
+
+- (void)printOpQueue {
+    NSLog(@"%@", [NSOperationQueue currentQueue]);
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -123,5 +139,43 @@
         }
     }
 }
+
+#pragma mark -- Fetch
+
+- (void)updateTopPlaces {
+    //[self printOpQueue];
+    //self.topPlaces = nil;
+    NSURL *urlForTopPlaces = [FlickrFetcher URLforTopPlaces];
+    NSURLRequest * request = [NSURLRequest requestWithURL:urlForTopPlaces];
+    NSURLSessionConfiguration * sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue: [[NSOperationQueue alloc] init]];//[NSOperationQueue mainQueue]];
+    
+    //[self.refreshControl beginRefreshing]; //mostly unnecessary
+    
+    NSURLSessionDownloadTask *sessionDownloadTask = [session downloadTaskWithRequest:request completionHandler:^(NSURL *localLocation, NSURLResponse *response, NSError *error) {
+        //[self printOpQueue];
+        if(!error) {
+            NSData *jsonResults = [NSData dataWithContentsOfURL:localLocation options:0 error:&error];
+            NSDictionary *propertyListResults= [NSJSONSerialization JSONObjectWithData:jsonResults options:0 error:NULL];
+            //NSLog(@"Top Places response as property list: %@", [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES]);
+            NSArray *flickrTopPlaces = [propertyListResults valueForKeyPath:FLICKR_RESULTS_PLACES];
+            //NSLog(@"Sending request to relaodData");
+            [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+                [Place loadPlacesFromFlickrArray:flickrTopPlaces intoManagedObjectContext:self.managedObjectContext];
+                NSError *error;
+                [self.managedObjectContext save:&error];
+                //[self.tableView reloadData];
+                //[self.refreshControl endRefreshing];
+            }];
+            
+        }   else {
+            NSLog(@"Error:%@", error);
+        }
+        
+    }];
+    [sessionDownloadTask resume];
+}
+
+
 
 @end

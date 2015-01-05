@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Photo.h"
 
 @interface PhotoViewController : UIViewController
 
 @property (nonatomic) NSDictionary *photoMetaData;
+@property (nonatomic) Photo *photo;
 
 @end

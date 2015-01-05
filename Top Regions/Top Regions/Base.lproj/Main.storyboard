@@ -59,7 +59,7 @@
         <!--Photos List TblVC-->
         <scene sceneID="byn-c4-L4x">
             <objects>
-                <tableViewController title="Photos List TblVC" clearsSelectionOnViewWillAppear="NO" id="w8h-fq-A6U" customClass="PhotosListTableViewController" sceneMemberID="viewController">
+                <tableViewController title="Photos List TblVC" clearsSelectionOnViewWillAppear="NO" id="w8h-fq-A6U" customClass="PhotosListCDTVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="UVA-ge-KMA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -195,7 +195,7 @@
         <!--Top Places TblVC-->
         <scene sceneID="X3W-pe-qN8">
             <objects>
-                <tableViewController title="Top Places TblVC" clearsSelectionOnViewWillAppear="NO" id="aHT-Av-ZWO" customClass="TopPlacesViewController" sceneMemberID="viewController">
+                <tableViewController title="Top Places TblVC" clearsSelectionOnViewWillAppear="NO" id="aHT-Av-ZWO" customClass="TopPlacesCDTVC" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="maM-OW-HwH">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -268,7 +268,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
+        <segue reference="jLT-Pg-Rh1"/>
         <segue reference="iFx-Cm-aR4"/>
-        <segue reference="U0V-4e-JcB"/>
     </inferredMetricsTieBreakers>
 </document>

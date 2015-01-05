@@ -40,7 +40,7 @@
     self.scrollView.delegate = self;
     self.scrollView.delegateForLayoutChanges = self; //Option 3
 
-    [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];
+    [self setTitle: (self.photo? self.photo.title : [PhotosListTableViewController titleForPhoto:self.photoMetaData]) ];
     
     if(self.splitViewController) {
 //        self.splitViewController.delegate = self;
@@ -170,7 +170,7 @@
 
     //self.photos = nil;
 
-    NSURL *urlForPhoto = [FlickrFetcher URLforPhoto:self.photoMetaData format:FlickrPhotoFormatLarge];
+    NSURL *urlForPhoto = self.photo? [NSURL URLWithString:self.photo.imageUrl] : [FlickrFetcher URLforPhoto:self.photoMetaData format:FlickrPhotoFormatLarge];
     NSURLSessionConfiguration *sessionConfiguration = [NSURLSessionConfiguration ephemeralSessionConfiguration];
     NSURLSession *session = [NSURLSession sessionWithConfiguration:sessionConfiguration delegate:nil delegateQueue:nil];
 
@@ -208,6 +208,13 @@
     //NSLog(@"Photo set to : %@", photoMetaData);
     [self fetchImage];
     [self setTitle:[PhotosListTableViewController titleForPhoto:self.photoMetaData]];    
+}
+
+- (void)setPhoto:(Photo *)photo {
+    _photo = photo;
+    //NSLog(@"Photo set to : %@", photo);
+    [self fetchImage];
+    [self setTitle:photo.title];
 }
 
 
